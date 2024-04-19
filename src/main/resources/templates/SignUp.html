@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" href="/css/SignUp.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tontine Register Form</title>
+</head>
+<body>
+
+	<div class="container">
+      <h1 class="form-title">Welcome to the team !</h1>
+      <div class="alert-danger" th:if="${error==true}" >
+			<span>
+				Probleme de Saisie
+			</span>
+		</div>
+      <form th:action="@{/users/signUp}" th:object="${userSignUp}" method="POST" id="register_form">
+        <div class="main-user-info">
+			
+          <div class="user-input-box">
+            <label for="Firstname">First name</label>
+            <input type="text" id="Firstname" name="Firstname" th:field="*{prenom}" placeholder="Enter First Name"/>
+            <div th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="Lastname">Last name</label>
+            <input type="text"id="Lastname"name="Lastname"
+                    th:field="*{nom}" placeholder="Enter Last Name"/>
+             <div th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="email">Email</label>
+            <input type="email"
+                    id="email"
+                    name="email"
+                  th:field="*{email}"  placeholder="Enter Email"/>
+          	<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                  th:field="*{numTel}"  placeholder="Enter Phone Number"/>
+          	<div th:if="${#fields.hasErrors('numTel')}" th:errors="*{numTel}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="password">Password</label>
+            <input type="password"
+                    id="password"
+                    name="password"
+                   th:field="*{password}" placeholder="Enter Password"/>
+          	<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="confimpassword"> confim Password</label>
+            <input type="password"
+                    id="confimpassword"
+                    name="confimpassword"
+                   th:field="*{confirmpassword}" placeholder="confim Password"/>
+          	<div th:if="${#fields.hasErrors('confirmpassword')}" th:errors="*{confirmpassword}" class="text-danger" style="color: rgb(255, 0, 0);"></div>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="dateNaiss"> date Naissance</label>
+            <input type="date"
+                    id="dateNaiss"
+                    name="dateNaiss"
+                   th:field="*{dateNaiss}" placeholder="date Naissance"/>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="adresse"> adresse</label>
+            <input type="text"
+                    id="adresse"
+                    name="adresse"
+                 th:field="*{adresse}"   placeholder=" Entrez votre adresse"/>
+          </div>
+          
+          <div class="user-input-box">
+            <label for="profession"> profession</label>
+            <input type="text"
+                    id="profession"
+                    name="profession"
+                th:field="*{profession}"     placeholder=" Entrez votre profession"/>
+          </div> 
+          
+          <div class="user-input-box">
+            <label for="sexe"> sexe</label>
+            <select th:field="*{sexe}">
+				<option value="homme">Homme</option>
+				<option value="femme">Femme</option>
+			</select>
+          </div>
+          
+        </div>
+        <div class="form-submit-btn">
+          <input href="main.html" type="submit" value="sign up">
+        </div>
+        <p>
+			
+		</p>
+        <div class ="signin">
+          <p>Already have an account ? <a th:href="@{/users/login}">sign in</a></p>
+        </div>
+      </form>
+    </div>
+</body>
+</html>

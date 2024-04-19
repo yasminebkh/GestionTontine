@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Les participants d'une Dart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.css">
+    <style>
+        body {
+            background: linear-gradient(45deg, #FFB534, #FFD966, #FFA732, #FFA732);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            margin: 0; 
+            font: 400 14px 'Calibri', 'Arial';
+            padding: 20px;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .list {
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+            
+            
+        }
+
+        table {
+            border-spacing: 1px;
+            border-collapse: collapse;
+            background: rgb(243, 243, 243);
+            border-radius: 6px;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        table * {
+            position: relative;
+        }
+
+        td, th {
+            padding-left: 8px;
+        }
+
+        thead tr {
+            height: 60px;
+            background: #ffed86;
+            font-size: 16px;
+        }
+
+        tbody tr {
+            height: 48px;
+            border-bottom: 1px solid #e3f1d5;
+        }
+
+        tbody tr:last-child {
+            border: 0;
+        }
+
+        td, th {
+            text-align: left;
+        }
+
+        td.l {
+            text-align: right;
+        }
+
+        td.c, th.c {
+            text-align: center;
+        }
+
+        td.r {
+            text-align: center;
+        }
+
+        @media screen and (max-width: 23.5em) {
+            table {
+                display: block;
+                > *, tr, td, th {
+                    display: block;
+                }
+                thead {
+                    display: none;
+                }
+                tbody tr {
+                    height: auto;
+                    padding: 8px 0;
+                }
+                td {
+                    padding-left: 45%;
+                    margin-bottom: 12px;
+                }
+                td:last-child {
+                    margin-bottom: 0;
+                }
+                td:before {
+                    position: absolute;
+                    font-weight: 700;
+                    width: 40%;
+                    left: 10px;
+                    top: 0;
+                }
+                td:nth-child(1):before {
+                    content: "Code";
+                }
+                td:nth-child(2):before {
+                    content: "Stock";
+                }
+                td:nth-child(3):before {
+                    content: "Cap";
+                }
+                td:nth-child(4):before {
+                    content: "Inch";
+                }
+                td:nth-child(5):before {
+                    content: "Box Type";
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="list">
+        List of Participants in Dart
+    </div>
+    <table th:each="operationDart: ${dart}">
+        <thead>
+            <tr>
+                <th class="text-center">Full Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Phone Number</th>
+                <th class="text-center">amount contributed</th>
+            </tr>
+        </thead>
+        <tbody th:each="participants: ${participantsList}" >
+            <tr>
+                <td class="text-center">
+                    <span class="label label-default" th:text="${participants.nom}"></span>
+                    <span class="label label-default" th:text="${participants.prenom}"></span>
+                </td>
+                <td class="text-center">
+                    <span class="label label-default" th:text="${participants.email}"></span>
+                </td>
+                <td class="text-center">
+                    <span class="label label-default" th:text="${participants.numTel}"></span>
+                </td>
+                <td class="text-center">
+					<!-- <span style="color: darkgreen;">Received Amount : <i th:text="${participants.SoldeTotal}" style="font-weight: bold;"></i> DH</span> -->
+					<span th:if="${participants.SoldeTotal eq 0}" style="color: rgb(217, 0, 0);">Not yet</span>
+					<span th:unless="${participants.SoldeTotal eq 0}" style="color: rgb(0, 125, 0);">Received Amount : <i th:text="${participants.SoldeTotal}" style="font-weight: bold;"></i> DH</span>
+
+                    <!-- <button th:disabled="${@cotisationMetier.verificationPayement(participants.id,operationDart.id)}">Recevoir</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

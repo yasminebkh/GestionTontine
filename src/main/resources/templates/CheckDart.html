@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html charset="UTF-8" lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<title>Check Dart</title>
+	<link rel="stylesheet" type="text/css" href="list.css">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	
+</head>
+<style>
+	
+	* {
+    font-family: Nunito, sans-serif;
+  }
+  
+  .responsive-cell-block {
+    min-height: 75px;
+  }
+  
+  .text-blk {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    line-height: 25px;
+  }
+  
+  .responsive-container-block {
+    min-height: 75px;
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    justify-content: space-evenly;
+  }
+  
+  .team-head-text {
+    font-size: 48px;
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  .team-head-text {
+	  color:  #f1c40f;
+    line-height: 50px;
+    width: 100%;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 50px;
+    margin-left: 0px;
+  }
+  
+  .container {
+	  
+    max-width: 1380px;
+    margin-top: 60px;
+    margin-right: auto;
+    margin-bottom: 60px;
+    margin-left: auto;
+    padding-top: 0px;
+    padding-right: 30px;
+    padding-bottom: 0px;
+    padding-left: 30px;
+  }
+  
+  .card {
+	border-radius: 12px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 20px 7px;
+    /*box-shadow: #f1c40f 0px 4px 20px 7px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    padding-right: 25px;
+    padding-bottom: 30px;
+    padding-left: 25px;
+  }
+  
+  .card-container {
+	  border-radius: 12px;
+	  background-color:  rgb(247, 221, 121);
+    width: 280px;
+    margin-top: 0px;
+    margin-right: 10px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+  }
+  
+  .name {
+    margin-top: 20px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    margin-left: 0px;
+    font-size: 18px;
+    font-weight: 800;
+  }
+  
+  .position {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+  }
+  
+  .feature-text {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    color: rgb(122, 122, 122);
+    line-height: 30px;
+  }
+  
+
+  
+  .team-image-wrapper {
+    clip-path: circle(50% at 50% 50%);
+    width: 130px;
+    height: 130px;
+  }
+  
+  .team-member-image {
+    max-width: 100%;
+  }
+  html{
+	  
+	background-image: url(https://1.bp.blogspot.com/-AkLQk_oiTAY/WGYoFsMt4II/AAAAAAAAAGU/jGaG8PvgGuEf9lgMRFijthPs5WOPxY1sgCLcB/s1600/tontine.jpg);
+	background-size: cover;
+	}
+</style>
+<body>
+	<div class="body">
+    <div class="responsive-container-block container" >
+    <p class="text-blk team-head-text">
+       Dart Member 
+    </p>
+    <div class="responsive-container-block" th:each="Operationdart : ${dart}">
+      <div class="responsive-cell-block wk-desk-3 wk-ipadp-3 wk-tab-6 wk-mobile-12 card-container" th:each="participants: ${participantsList}">
+        <div class="card">
+          <div class="team-image-wrapper">
+            <img class="team-member-image" src="https://lh3.googleusercontent.com/proxy/A9orO--EsDo2aXkho6KUJGepC_D_PglwQYaFIK_YPkORkeKHy25fPZgqh4P3umDt0mH0gbvE97aTj69XIc6e8qMUh-wUfVT64yAqqw">
+          </div>
+          <p class="text-blk name">
+            <i th:text="${participants.nom}"></i> <i th:text="${participants.prenom}"></i>
+          </p>
+          <p></p>
+          <div class="item-except text-muted text-sm h-1x">Email : <i class="form-title"  th:text="${participants.email}"></i></div>
+          &nbsp;
+          <div class="item-except text-muted text-sm h-1x" > Phone Number : <i class="form-title"  th:text="${participants.numTel}"></i> </div>
+          
+        </div>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+</body>
+</html>

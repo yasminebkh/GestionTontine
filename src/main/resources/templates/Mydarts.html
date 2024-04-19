@@ -1,0 +1,244 @@
+<!-- Mydarts.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <style>
+        .container {
+            margin: 20px 40px;
+            color: goldenrod;
+        }
+
+        .heading {
+            font-size: 50px;
+            color: black;
+            text-align: center;
+            font-family: 'Allura', cursive;
+        }
+
+        .coach span {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .heading span {
+            font-style: italic;
+            font-size: 60px;
+            color: goldenrod;
+            text-align: center;
+            font-family: 'Allura', cursive;
+        }
+
+        .coachs {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 80px;
+        }
+
+        .coach {
+            flex-basis: 260px;
+            flex-direction: row;
+        }
+
+        .coach .coach-img {
+            height: 260px;
+            width: 260px;
+            border-radius: 50%;
+            filter: grayscale(100%);
+            cursor: pointer;
+            transition: 400ms;
+        }
+
+        .coach:hover .coach-img {
+            filter: grayscale(0);
+        }
+
+        .coach-name {
+            margin-top: 30px;
+            font-size: 35px;
+            color: #000;
+        }
+
+        .coach h5 {
+            font-size: 18px;
+            font-weight: 100;
+            letter-spacing: 3px;
+            color: goldenrod;
+        }
+
+        .coach p {
+            font-size: 16px;
+            margin-top: 20px;
+            text-align: justify;
+            color: #000;
+        }
+
+        @media only screen and (max-width: 1150px) {
+            .coachs {
+                flex-direction: column;
+            }
+
+            .coach {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .coach p {
+                text-align: center;
+                margin: 20px 60px 80px 60px;
+                font-size: 20px;
+            }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .heading {
+                font-size: 40px;
+                color: goldenrod;
+                text-align: center;
+            }
+
+            .heading span {
+                font-size: 15px;
+            }
+
+            .coachs {
+                margin: 20px 0;
+            }
+
+            .coach p {
+                margin: 20px 10px 80px 10px;
+            }
+        }
+        .all-list{
+			box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 20px 7px;
+			margin-left: 160px;
+			margin-top: 40px;
+			margin-right: 160px;
+			padding-top: 30px;
+			background-color: rgb(221, 221, 221);
+			border-radius: 15px;
+		}
+    </style>
+<head>
+   <meta charset="UTF-8">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="all-list">
+	<h1 class="heading"><span>My</span>Darts</h1>
+<div th:each="participant : ${loggedInParticipant}">
+	<div class="container" th:each="dart : ${dartsList}" >
+
+  
+      <div class="coachs" >
+        <div class="coach" >
+          <img src="/images/mydarts.jpg" class="coach-img" id="idImage" 
+          th:attr="data-montant=${dart.montant}, id-dart=${dart.id} ,data-pas-tour-role=${dart.pas_tour_role}, data-nombre-personne=${dart.nombre_personne}"
+          data-toggle="modal" data-target="#myModal">
+          <span>
+			  <h3 class="coach-name" th:text="${dart.montant}"></h3>
+	          <h4>The period :<span th:text="${dart.pas_tour_role}"></span></h4>
+	          <h4>Number of people : <span th:text="${dart.nombre_personne}"></span></h4>
+		  </span>
+          <p></p>
+        </div>
+       
+      </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="max-height: 400px; overflow-y: auto;">
+                <div style="text-align: center; background-color: rgb(224, 173, 39); color: white; padding: 10px;" class="headerpopup">
+                    <h4 class="modal-title">Detail of Dart</h4>
+                </div>
+                <div class="modal-body">
+                    <h5>Montant: <span id="dartMontant"></span></h5>
+                    <h5>Pas tour role: <span id="dartPasTourRole"></span></h5>
+                    <h5>Number of people: <span id="dartNombrePersonne"></span></h5>
+                </div>
+                <div class="buttons-popup" style="text-align: center; padding: 10px;">
+					<button type="button" class="btn btn-default" data-dismiss="modal" style="font-size: 16px; margin-top: 10px; background-color: rgb(224, 173, 39); border-color: rgb(224, 173, 39);">Close</button>
+			    	
+			    	<!-- <button type="button" class="btn btn-default payer-btn" style="font-size: 16px; margin-top: 10px; background-color: rgb(224, 173, 39); border-color: rgb(224, 173, 39);"
+			    	th:attr="dart-id=${dart.id},participant-id=${participant.id}" th:disabled="${activerButtonReceive}">Receive</button> -->
+			    	
+			    	<button type="button" class="btn btn-default payer-btn" 
+					        style="font-size: 16px; margin-top: 10px; background-color: rgb(224, 173, 39); border-color: rgb(224, 173, 39);"
+					        th:disabled="${session['activerButton_' + dart.id + '_' + participant.id] == null or !session['activerButton_' + dart.id + '_' + participant.id]}">Receive
+					</button>
+					<!--onclick="receiveAmount()" -->
+			    </div>
+			    
+            </div>
+        </div>
+    </div>
+      
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+
+<script>
+        $(document).ready(function(){
+            $(document).on("click", ".coach-img", function(event){
+                event.preventDefault();
+                //var btnReceive = $(this).data('id');
+                var montant = $(this).data('montant');
+                var pasTourRole = $(this).data('pas-tour-role');
+                var nombrePersonne = $(this).data('nombre-personne');
+				
+				//$("#btnReceive").text(btnReceive);
+                $("#dartMontant").text(montant);
+                $("#dartPasTourRole").text(pasTourRole);
+                $("#dartNombrePersonne").text(nombrePersonne);
+
+                $("#myModal").modal("show");
+            });
+
+            $('#myModal').modal('hide');
+        });
+        
+        //function receiveAmount() {
+        //$.ajax({
+            //type: 'POST',
+            //url: '/dart/receive-amount',
+            //success: function (response) {
+                //console.log(response); 
+            //},
+            //error: function (error) {
+                //console.error(error);
+            //}
+        //});
+    //}
+        
+        $(document).ready(function() { 
+			$(document).on("click", ".payer-btn",function(event){
+				event.preventDefault();
+				//$(this).attr('dart-id')
+				var dartID = $(this).attr('dart-id');
+				//$(this).attr('participant-id')
+				var participantID = $(this).attr('participant-id');
+	            $.ajax({
+	                url: '/dart/participantsPayed/' + participantID + '/' + dartID,
+	                type: 'POST',
+	                success: function(response) {
+	                    console.log('Paiement effectué pour le participant ID ' + participantID + ' pour la Dart ID ' + dartID);
+	                },
+	                error: function(error) {
+	                    console.error('Erreur lors du paiement :', error);
+	                }
+	            });
+	            $(".payer-btn").prop('disabled', true);
+	            //var payerButton = document.getElementById("payerButton");
+            	//payerButton.disabled = true;
+			});
+	       
+	    });
+    </script>
+</div>
+</body>
+</html>
+
+

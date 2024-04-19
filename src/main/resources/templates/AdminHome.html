@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Festive&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/css/AdminHome.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<meta name="theme-color" content="#7952b3">
+	<script src="https://kit.fontawesome.com/f687d76c42.js"></script>
+    <!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+	<style>
+	    .edit-button {
+	        color: rgb(138, 196, 234);
+	    }
+	
+	    .delete-button {
+	        color: rgb(239, 134, 122);
+	    }
+	        .alert {
+	            background-color:  rgba(0, 0, 0, 0.7);
+	            color: white;
+	            position: fixed;
+	        	top: 50%;
+	        	left: 50%;
+	        	transform: translate(-50%, -50%); 
+	        }
+	        .alert alert-success{
+	            border: 1px solid rgb(48, 254, 18);
+	        }
+	        .alert-success {
+	            color: rgb(48, 254, 18);
+	            border: 1px solid rgb(48, 254, 18);
+        	}
+    	.alert-danger {
+	            color: rgb(255, 0, 0);
+	            border: 1px solid rgb(255, 0, 0);
+        	}
+        	
+        .label-success {
+		    color: rgb(71, 199, 65);
+		    font-weight: bold;
+		    background-color: #dff0d8;
+		    border-color: #d6e9c6;
+		}
+		
+		.label-danger {
+		    color: rgb(255, 66, 66);
+		    font-weight: bold;
+		    background-color: #f2dede;
+		    border-color: #ebccd1;
+		}
+		
+		.hidden {
+		    display: none;
+		}
+	</style>
+    
+	<title>tontine</title>
+</head>
+<body>
+	<script>
+    $(document).ready(function() {
+        if ($('.alert-success').length > 0) {
+            $('.alert-success').removeClass('d-none');
+            setTimeout(function() {
+                $('.alert-success').addClass('d-none');
+            }, 3000);
+        }
+        if ($('.alert-danger').length > 0) {
+            $('.alert-danger').removeClass('d-none');
+            setTimeout(function() {
+                $('.alert-danger').addClass('d-none');
+            }, 3000);
+        }
+    });
+</script>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text"> tontine</span>
+		</a>
+		<ul class="side-menu top">
+		<li>
+	    <a href="#">
+	        <i class='fa fa-credit-card' ></i>
+	        <span class="text">Darets</span>
+	    </a>
+    <ul class="sub-menu">
+        <li>
+            <a th:href="@{/dart/admin/create}">
+                <i class='bx bxs-doughnut-chart' ></i>
+                <span class="text">Create Dart</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li>
+			<a href="#">
+					<i class='fa fa-user-secret' ></i>
+					<span class="text">Les participants</span>
+			</a>
+			<ul class="sub-menu">
+			<li>
+				<a th:href="@{/dart/admin/ListParticipants}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Liste des participants</span>
+				</a>
+			</li>
+			
+			</ul>
+			</li>
+			</li>
+			<ul class="side-menu">
+			<li>
+				<a th:href="@{/logout}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">LogOut</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link"></a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search..." name="nomE">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			
+		</nav>
+		<!-- NAVBAR --><!-- List of Darts  -->
+        <section class="center-content">
+			
+			<div class="container">
+				
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<div class="table-responsive">
+				<div th:if="${success}" class="alert alert-success" role="alert">
+			        <span th:text="${success}"></span>
+			    </div>
+			    <div th:if="${nullInsert}" class="alert alert-danger" role="alert">
+			        <span th:text="${nullInsert}"></span>
+			    </div>
+				<table class="table user-list">
+					<thead>
+						<tr>
+							<th><span>Dart</span></th>
+							<th><span>Created</span></th>
+							<th class="text-center"><span>Status</span></th>
+							<th><span>Pas Tour de Role</span></th>
+							<th><span>Date de debut</span></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody th:each="darts : ${operationDarts}">
+						<tr>
+							<td style="width: 20%;">
+								<img src ="/images/tontine.jpg" alt="">
+								<span class="user-link" th:text="${darts.montant}"></span>
+								<span>Participants Number : <span class="user-subhead"  th:text="${darts.nombre_personne}"></span></span>
+							</td>
+							<!--th:text="${}"  -->
+							<td><span th:text="${darts.created_at}"></span></td>
+							
+							
+							<td class="text-center">
+							    <span class="label" th:classappend="${darts.flag == 'Active' ? 'label-success' : 'label-danger'}">
+							        <span class="glyphicon glyphicon-ok" aria-hidden="true" th:class="${darts.flag == 'active' ? '' : 'hidden'}"></span>
+							        <span th:text="${darts.flag}"></span>
+							    </span>
+							</td>
+							
+							
+							<td>
+								<span th:text="${darts.pas_tour_role}"></span>
+							</td>
+							<td>
+							    <span>
+							        <span th:if="${darts.date_debut == NULL}">yyyy-mm-dd</span>
+							        <span th:if="${darts.date_debut != NULL}" th:text="${darts.date_debut}"></span>
+							    </span>
+							</td>
+							<td style="width: 25%; vertical-align: middle;">
+							    <div class="btn-group" role="group">
+							        <a th:href="@{'/dart/admin/list/' + ${darts.id}}" class="btn btn-sm btn-primary">
+							            <span class="fa-stack">
+							                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+							            </span>
+							        </a>
+							    
+							        <a th:href="@{'/dart/admin/edit/' + ${darts.id}}" class="btn btn-sm btn-warning">
+							            <span class="fa-stack">
+							                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+							            </span>
+							        </a>
+							    
+							        <form th:action="@{/dart/admin/home/{id}(id=${darts.id})}" th:method="delete" class="delete-form">
+							            <button type="submit" class="btn btn-sm btn-danger">
+							                <span class="fa-stack">
+							                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+							                </span>
+							            </button>
+							        </form>
+							    </div>
+							</td>
+                            
+
+							
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+</div>
+</div>
+			
+	    </section>
+    </section>
+    
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" href="/css/joinDart.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Join Form</title>
+</head>
+<body>
+<section th:each="dart : ${dartTojoin}">
+	    <div class="container" th:each="participant : ${loggedInParticipant}" >
+      <h1 class="form-title">Join Our Team Tontine</h1> 
+      <form  th:action="@{/dart/participant/home/joinDart}" th:object="${joinDart}" method="POST" id="register_form">
+        <div class="main-user-info">
+          <div class="user-input-box">
+            <label for="Firstname">First Name: </label>
+            <input type="text" id="Firstname" name="Firstname"  th:value="${participant.prenom}" disabled/>
+          </div>
+          <div class="user-input-box">
+            <label for="Lastname">Last Name: </label>
+            <input type="text" id="Lastname" name="Lastname"  th:value="${participant.nom}" disabled/>
+          </div>
+        </div>
+        <div class="main-user-info">
+          <div class="user-input-box">
+            <label for="email">Email: </label>
+            <input type="text" id="email" name="email" th:value="${participant.email}" disabled/>
+            <input type="hidden" name="participant" th:value="${participant.id}" />
+          </div>
+          <div class="user-input-box">
+            <label for="montant">Amount contributed: </label>
+            <select id="montant" name="montant_cotise" class="form-control">
+		        <option th:value="${dart.montant}" th:text="${dart.montant}"></option>
+		        <option th:value="${dart.montant / 2}" th:text="${dart.montant / 2}"></option>
+		    </select>
+
+
+            <input type="hidden" name="operationDart" th:value="${dart.id}" />
+            <input type="hidden" name="date_participation" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+          </div>
+        </div>
+        <div class="form-submit-btn">
+          <input type="submit" value="Join">
+        </div>
+        
+      </form>
+    </div>
+</section>
+</body>
+</html>
